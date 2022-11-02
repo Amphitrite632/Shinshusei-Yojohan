@@ -1,0 +1,54 @@
+body{
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #2f2f2c;
+    color: #d0d0d0;
+    width: 580px;
+}
+@media screen and (max-width: 580px){
+    body{
+        width: 90vw;
+    }
+}
+h1{
+    margin-bottom: 0;
+    font-size: 27px;
+    font-weight: normal;
+}
+h3{
+    margin-top: 0.5em;
+    margin-bottom: 0;
+    font-size: 24px;
+}
+p{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.locate{
+  margin-top: 20.25px;
+  margin-bottom: 0;
+}
+.line{
+    height: 20.25px;
+    border-bottom: 4px double #d0d0d0;
+}
+.date{
+    display: block;
+    text-align: right;
+    color: #a1a1a1;
+}
+a{
+    color: #d0d0d0;
+}
+.navi{
+    display: flex;
+    justify-content: center;
+    margin: 1.5em 0;
+}
+
+.navi a{
+    font-size: 1.25rem;
+    margin: 0 0.5rem;
+}
