@@ -48,7 +48,7 @@ a{
     margin: 1.5em 0;
 }
 
-.navi a{
+.navi a, .navi span{
     font-size: 1.25rem;
     margin: 0 0.5rem;
 }

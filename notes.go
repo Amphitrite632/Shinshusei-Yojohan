@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"math"
 	"net/http"
-	"encoding/json"
 	"strconv"
 	"text/template"
 	"time"
@@ -28,7 +28,7 @@ func notFoundHandler(w http.ResponseWriter, r *http.Request, status int) {
 	http.ServeFile(w, r, "resource/404.html")
 }
 
-func articleRequestHandler(w http.ResponseWriter, r *http.Request) {
+func articlesRequestHandler(w http.ResponseWriter, r *http.Request) {
 	template := template.Must(template.ParseFiles("articles/template.html"))
 
 	var paths []string
@@ -52,11 +52,11 @@ func articleRequestHandler(w http.ResponseWriter, r *http.Request) {
 
 	var navi string
 	if page == 1 {
-		navi = "<p class=\"navi\"><a href=\"/articles?page=1\">1</a><a href=\"/articles?page=2\">2</a><a href=\"/articles?page=3\">3</a><a>...</a><a href=\"/articles?page=" + fmt.Sprint(int(maxPageNumber)) + "\">" + fmt.Sprint(int(maxPageNumber)) + "</a></p> "
+		navi = "<p class=\"navi\"><span>1</span><a href=\"/articles?page=2\">2</a><a href=\"/articles?page=3\">3</a><a>...</a><a href=\"/articles?page=" + fmt.Sprint(int(maxPageNumber)) + "\">" + fmt.Sprint(int(maxPageNumber)) + "</a></p> "
 	} else if page == int(maxPageNumber) {
-		navi = "<p class=\"navi\"><a href=\"/articles?page=1\">1</a><a>...</a><a href=\"/articles?page=" + fmt.Sprint(page-2) + "\">" + fmt.Sprint(page-2) + "</a><a href=\"/articles?page=" + fmt.Sprint(page-1) + "\">" + fmt.Sprint(page-1) + "</a><a href=\"/articles?page=" + fmt.Sprint(page) + "\">" + fmt.Sprint(page) + "</a>"
+		navi = "<p class=\"navi\"><a href=\"/articles?page=1\">1</a><a>...</a><a href=\"/articles?page=" + fmt.Sprint(page-2) + "\">" + fmt.Sprint(page-2) + "</a><a href=\"/articles?page=" + fmt.Sprint(page-1) + "\">" + fmt.Sprint(page-1) + "</a><span>" + fmt.Sprint(page) + "</span>"
 	} else {
-		navi = "<p class=\"navi\"><a href=\"/articles?page=1\">1</a><a>...</a><a href=\"/articles?page=" + fmt.Sprint(page-1) + "\">" + fmt.Sprint(page-1) + "</a><a href=\"/articles?page=" + fmt.Sprint(page) + "\">" + fmt.Sprint(page) + "</a><a href=\"/articles?page=" + fmt.Sprint(page+1) + "\">" + fmt.Sprint(page+1) + "</a><a>...</a><a href=\"/articles?page=" + fmt.Sprint(int(maxPageNumber)) + "\">" + fmt.Sprint(int(maxPageNumber)) + "</a></p> "
+		navi = "<p class=\"navi\"><a href=\"/articles?page=1\">1</a><a>...</a><a href=\"/articles?page=" + fmt.Sprint(page-1) + "\">" + fmt.Sprint(page-1) + "</a><span>" + fmt.Sprint(page) + "</span><a href=\"/articles?page=" + fmt.Sprint(page+1) + "\">" + fmt.Sprint(page+1) + "</a><a>...</a><a href=\"/articles?page=" + fmt.Sprint(int(maxPageNumber)) + "\">" + fmt.Sprint(int(maxPageNumber)) + "</a></p>"
 	}
 
 	article := map[string]string{
@@ -73,7 +73,7 @@ func linksRequestHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.Handle("/resource/", http.StripPrefix("/resource/", http.FileServer(http.Dir("resource/"))))
-	http.HandleFunc("/articles/", articleRequestHandler)
+	http.HandleFunc("/articles/", articlesRequestHandler)
 	http.HandleFunc("/links/", linksRequestHandler)
 	http.HandleFunc("/", topPageHandler)
 	http.ListenAndServe(":8500", nil)
